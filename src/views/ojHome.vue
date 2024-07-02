@@ -1,13 +1,18 @@
 <!-- src/views/Home.vue -->
 <template>
     <div class="container">
-      
+      <CodeforceData></CodeforceData>
     </div>
 </template>
   
   <script>
+  import CodeforceData from '../components/secondary/CodeforcesData.vue'
+
   export default {
-    name: 'ojHome'
+    name: 'ojHome',
+    components:{
+      CodeforceData
+    }
   }
   </script>
   
