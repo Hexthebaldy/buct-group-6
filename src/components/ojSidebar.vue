@@ -10,7 +10,6 @@
       <router-link class="sideBarSelection" to="/train">Train</router-link>
       <router-link class="sideBarSelection" to="/award">Awards</router-link>
       <router-link class="sideBarSelection" to="/dataVisualization">DataVisualization</router-link>
-
     </div>
 </template>
   
