@@ -2,10 +2,10 @@
 <template>
     <div class="sidebar">
       <router-link class="sideBarSelection" to="/home">Home</router-link>
-      <router-link class="sideBarSelection" to="/CFinfo">CFinfo</router-link>
+      <router-link class="sideBarSelection" to="/CFinfo">CFproblems</router-link>
       <router-link class="sideBarSelection" to="/recentContest">RecentContest</router-link>
       <router-link class="sideBarSelection" to="/contestFeedback">ContestFeedback</router-link>
-      <router-link class="sideBarSelection" to="/contestArrangement">ContestArrangement</router-link>
+      <router-link class="sideBarSelection" to="/contestArrangement">Schedule</router-link>
       <router-link class="sideBarSelection" to="/rank">Rank</router-link>
       <router-link class="sideBarSelection" to="/train">Train</router-link>
       <router-link class="sideBarSelection" to="/award">Awards</router-link>
