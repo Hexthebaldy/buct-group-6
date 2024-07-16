@@ -320,7 +320,7 @@ export default {
 <style>
 .container {
   height: 2150px;
-  background: rgb(214, 213, 213);
+  background: #f1f3f4;
 }
 
 .block1 {
