@@ -1,31 +1,73 @@
 <!-- src/App.vue -->
+<!-- <template>
+  <div id="app">
+      <ojLogin v-if="!isLoggedIn" @login-success="handleLoginSuccess"></ojLogin>
+      <div v-else class="container">
+        <ojSidebar id="ojSidebar"/>
+        <div class="main-content">
+          <router-view />
+        </div>
+      </div>
+  </div>
+</template> -->
 <template>
   <div id="app">
-    <ojSidebar id="ojSidebar"/>
-    <div class="main-content">
-      <router-view />
+    <div class="login-container" v-if="0">
+      <ojLogin @login-success="handleLoginSuccess"></ojLogin>
+    </div>
+    <div v-else class="container">
+      <ojSidebar id="ojSidebar"/>
+      <div class="main-content">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
 
+
 <script>
 import ojSidebar from './components/ojSidebar';
+import ojLogin from './components/ojLogin.vue';
+import { mapState,mapActions } from 'vuex';
+
 
 export default {
   name: 'App',
   components: {
-    ojSidebar
-  }
-}
+    ojSidebar,
+    ojLogin,
+  },
+
+
+  computed:{
+    ...mapState(['isLoggedIn'])
+  },
+
+
+  methods:{
+    ...mapActions(['login']),
+    handleLoginSuccess(){
+      this.login();
+    }
+  },
+
+
+
+};
 </script>
 
 <style>
 body{
-  margin:0%
+  margin:0%;
+  background: rgb(241, 243, 244);
+
 }
 
 #app {
   display: flex;
+  width:100vw;
+  height:100vh;
+  
 }
 
 #ojSidebar{
@@ -33,12 +75,19 @@ body{
 }
 
 .main-content {
-  background: rgb(180,186,186);
-  background: linear-gradient(34deg, rgba(180,186,186,1) 19%, rgba(208,211,235,1) 52%, rgba(186,185,185,1) 86%);
   margin-left: 200px;
-  padding: 20px;
-  width: 100%;
-  height:100%;
+  padding-left: 20px;
   flex: left;
 }
+
+.login-container{
+  display: flex;
+  background-image: url(./assets/log-in-background.png);
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width:100%;
+}
+
 </style>

@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div class="topBar">Codeforces Competitions Data</div>
-    <br>
-    <div>
+  <div class="container">
+    <div class="page">
+    <h3 class="topBar">Codeforces Player Data</h3>
+    <div class="buttons">
       <el-button @click="filterCompetitions('all')">All</el-button>
       <el-button @click="filterCompetitions('active')">Active</el-button>
       <el-button @click="filterCompetitions('retired')">Retired</el-button>
@@ -10,41 +10,43 @@
     </div>
     <el-table
       :data="pagedCompetitions"
-      style="width: 70%"
+      style="width: 80%"
       highlight-current-row
       @row-click="handleRowClick"
       :row-class-name="tableRowClassName"
     >
-      <el-table-column prop="stuNO" label="ID" width="150"></el-table-column>
       <el-table-column
-        prop="realName"
-        label="Name"
+        prop="stuNo"
+        label="stuNo"
+        width="200"
+      ></el-table-column>
+      <el-table-column
+        prop="stuName"
+        label="stuName"
         width="150"
       ></el-table-column>
       <el-table-column
-        prop="className"
-        label="Major"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="gender"
-        label="Gender"
+        prop="stuClass"
+        label="stuClass"
         width="100"
       ></el-table-column>
       <el-table-column
-        prop="school"
-        label="School"
+        prop="stuAcId"
+        label="stuAcId"
         width="150"
       ></el-table-column>
-      <el-table-column prop="year" label="Year" width="150"></el-table-column>
+      <el-table-column 
+        prop="stuCfId"
+        label="stuCfId"
+        width="150"></el-table-column>
       <el-table-column
         prop="cfRating"
         label="cfRating"
         width="150"
       ></el-table-column>
       <el-table-column
-        prop="atRating"
-        label="atRating"
+        prop="cfSumContest"
+        label="cfSumContest"
         width="150"
       ></el-table-column>
     </el-table>
@@ -68,6 +70,7 @@
     </div>
 
     <div id="ratingHistory" ></div>
+    </div>
     
   </div>
 </template>
@@ -81,6 +84,8 @@ import {
   ElInput,
 } from "element-plus";
 import * as echarts from "echarts";
+import axios from 'axios';
+
 
 export default {
   components: {
@@ -94,505 +99,14 @@ export default {
   data() {
     return {
       competitions: [
-        {
-          stuNO: "2021040010",
-          realName: "Hanz",
-          className: "EE",
-          gender: "male",
-          school: "BUCT",
-          year: "2021",
-          cfRating: "1500",
-          atRating: "1306",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040011",
-          realName: "Alice",
-          className: "CS",
-          gender: "female",
-          school: "NTU",
-          year: "2020",
-          cfRating: "1600",
-          atRating: "1400",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040012",
-          realName: "Bob",
-          className: "AI",
-          gender: "male",
-          school: "MIT",
-          year: "2022",
-          cfRating: "1700",
-          atRating: "1500",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040013",
-          realName: "Charlie",
-          className: "EE",
-          gender: "male",
-          school: "UCLA",
-          year: "2023",
-          cfRating: "1400",
-          atRating: "1200",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040014",
-          realName: "David",
-          className: "CS",
-          gender: "male",
-          school: "NTU",
-          year: "2021",
-          cfRating: "1500",
-          atRating: "1300",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040015",
-          realName: "Eve",
-          className: "AI",
-          gender: "female",
-          school: "MIT",
-          year: "2020",
-          cfRating: "1600",
-          atRating: "1400",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040016",
-          realName: "Frank",
-          className: "EE",
-          gender: "male",
-          school: "UCLA",
-          year: "2022",
-          cfRating: "1700",
-          atRating: "1500",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040017",
-          realName: "Grace",
-          className: "CS",
-          gender: "female",
-          school: "NTU",
-          year: "2023",
-          cfRating: "1400",
-          atRating: "1200",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040018",
-          realName: "Hank",
-          className: "AI",
-          gender: "male",
-          school: "MIT",
-          year: "2021",
-          cfRating: "1500",
-          atRating: "1300",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040019",
-          realName: "Ivy",
-          className: "EE",
-          gender: "female",
-          school: "UCLA",
-          year: "2020",
-          cfRating: "1600",
-          atRating: "1400",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040020",
-          realName: "John",
-          className: "CS",
-          gender: "male",
-          school: "NTU",
-          year: "2022",
-          cfRating: "1700",
-          atRating: "1500",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040021",
-          realName: "Karen",
-          className: "AI",
-          gender: "female",
-          school: "MIT",
-          year: "2023",
-          cfRating: "1400",
-          atRating: "1200",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040022",
-          realName: "Larry",
-          className: "EE",
-          gender: "male",
-          school: "UCLA",
-          year: "2021",
-          cfRating: "1500",
-          atRating: "1300",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040023",
-          realName: "Mallory",
-          className: "CS",
-          gender: "female",
-          school: "NTU",
-          year: "2020",
-          cfRating: "1600",
-          atRating: "1400",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040024",
-          realName: "Nina",
-          className: "AI",
-          gender: "female",
-          school: "MIT",
-          year: "2022",
-          cfRating: "1700",
-          atRating: "1500",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040025",
-          realName: "Oscar",
-          className: "EE",
-          gender: "male",
-          school: "UCLA",
-          year: "2023",
-          cfRating: "1400",
-          atRating: "1200",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040026",
-          realName: "Peggy",
-          className: "CS",
-          gender: "female",
-          school: "NTU",
-          year: "2021",
-          cfRating: "1500",
-          atRating: "1300",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040027",
-          realName: "Quinn",
-          className: "AI",
-          gender: "male",
-          school: "MIT",
-          year: "2020",
-          cfRating: "1600",
-          atRating: "1400",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040028",
-          realName: "Rob",
-          className: "EE",
-          gender: "male",
-          school: "UCLA",
-          year: "2022",
-          cfRating: "1700",
-          atRating: "1500",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040029",
-          realName: "Steve",
-          className: "CS",
-          gender: "male",
-          school: "NTU",
-          year: "2023",
-          cfRating: "1400",
-          atRating: "1200",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040030",
-          realName: "Trudy",
-          className: "AI",
-          gender: "female",
-          school: "MIT",
-          year: "2021",
-          cfRating: "1500",
-          atRating: "1300",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040031",
-          realName: "Uma",
-          className: "EE",
-          gender: "female",
-          school: "UCLA",
-          year: "2020",
-          cfRating: "1600",
-          atRating: "1400",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040032",
-          realName: "Victor",
-          className: "CS",
-          gender: "male",
-          school: "NTU",
-          year: "2022",
-          cfRating: "1700",
-          atRating: "1500",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040033",
-          realName: "Wendy",
-          className: "AI",
-          gender: "female",
-          school: "MIT",
-          year: "2023",
-          cfRating: "1400",
-          atRating: "1200",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040034",
-          realName: "Xander",
-          className: "EE",
-          gender: "male",
-          school: "UCLA",
-          year: "2021",
-          cfRating: "1500",
-          atRating: "1300",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040035",
-          realName: "Yara",
-          className: "CS",
-          gender: "female",
-          school: "NTU",
-          year: "2020",
-          cfRating: "1600",
-          atRating: "1400",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040036",
-          realName: "Zane",
-          className: "AI",
-          gender: "male",
-          school: "MIT",
-          year: "2022",
-          cfRating: "1700",
-          atRating: "1500",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040037",
-          realName: "Andy",
-          className: "EE",
-          gender: "male",
-          school: "UCLA",
-          year: "2023",
-          cfRating: "1400",
-          atRating: "1200",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040038",
-          realName: "Betty",
-          className: "CS",
-          gender: "female",
-          school: "NTU",
-          year: "2021",
-          cfRating: "1500",
-          atRating: "1300",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040039",
-          realName: "Carl",
-          className: "AI",
-          gender: "male",
-          school: "MIT",
-          year: "2020",
-          cfRating: "1600",
-          atRating: "1400",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040040",
-          realName: "Diana",
-          className: "EE",
-          gender: "female",
-          school: "UCLA",
-          year: "2022",
-          cfRating: "1700",
-          atRating: "1500",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040041",
-          realName: "Ethan",
-          className: "CS",
-          gender: "male",
-          school: "NTU",
-          year: "2023",
-          cfRating: "1400",
-          atRating: "1200",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040042",
-          realName: "Fiona",
-          className: "AI",
-          gender: "female",
-          school: "MIT",
-          year: "2021",
-          cfRating: "1500",
-          atRating: "1300",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040043",
-          realName: "George",
-          className: "EE",
-          gender: "male",
-          school: "UCLA",
-          year: "2020",
-          cfRating: "1600",
-          atRating: "1400",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040044",
-          realName: "Helen",
-          className: "CS",
-          gender: "female",
-          school: "NTU",
-          year: "2022",
-          cfRating: "1700",
-          atRating: "1500",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040045",
-          realName: "Isaac",
-          className: "AI",
-          gender: "male",
-          school: "MIT",
-          year: "2023",
-          cfRating: "1400",
-          atRating: "1200",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040046",
-          realName: "Jack",
-          className: "EE",
-          gender: "male",
-          school: "UCLA",
-          year: "2021",
-          cfRating: "1500",
-          atRating: "1300",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040047",
-          realName: "Kate",
-          className: "CS",
-          gender: "female",
-          school: "NTU",
-          year: "2020",
-          cfRating: "1600",
-          atRating: "1400",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040048",
-          realName: "Leo",
-          className: "AI",
-          gender: "male",
-          school: "MIT",
-          year: "2022",
-          cfRating: "1700",
-          atRating: "1500",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: true,
-        },
-        {
-          stuNO: "2021040049",
-          realName: "Mia",
-          className: "EE",
-          gender: "female",
-          school: "UCLA",
-          year: "2023",
-          cfRating: "1400",
-          atRating: "1200",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
-        {
-          stuNO: "2021040050",
-          realName: "Nick",
-          className: "CS",
-          gender: "male",
-          school: "NTU",
-          year: "2021",
-          cfRating: "1500",
-          atRating: "1300",
-          ratingHistory: [1420, 1450, 1480, 1500, 1520, 1540, 1560, 1580, 1590, 1600, 1610, 1620, ],
-          isRetired: false,
-        },
+      
       ],
 
       currentRow: null,
       searchQuery: "",
       filteredCompetitions: [],
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 15,
       ratingHistory: [],
     };
   },
@@ -637,7 +151,7 @@ export default {
     applyFilters() {
       if (this.searchQuery) {
         this.filteredCompetitions = this.competitions.filter((c) =>
-          c.realName.toLowerCase().includes(this.searchQuery.toLowerCase())
+          c.stuName.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       } else {
         this.filteredCompetitions = this.competitions;
@@ -676,37 +190,110 @@ export default {
       };
       myChart.setOption(option);
     },
+    generateRandomRating(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    },
+    generateRatingHistory(currentRating) {
+      const history = [];
+      let rating = currentRating;
+      for (let i = 0; i < 12; i++) {
+        const fluctuation = Math.floor(Math.random() * 100) - 100; // -100 到 0
+        rating += fluctuation;
+        if(rating < 0){
+          rating = 0;
+        }
+        history.unshift(rating); 
+      }
+      return history;
+    },
+    getInfo(){
+      const sheet = axios({
+        method:'get',
+        url:'/stu/acmer/student/some/1/120',
+      }).then(res =>{
+        this.competitions = res.data.data.records;
+        console.log("info got!");
+        this.competitions.forEach(student => {
+          if (student.stuNo) {
+            const firstDigit = parseInt(student.stuNo.charAt(0), 10);
+            const fourthDigit = parseInt(student.stuNo.charAt(3), 10);
+            student.isRetired = !((fourthDigit > 0 && fourthDigit < 4) && firstDigit == 2);
+          } else {
+            student.isRetired = true; 
+          }
+
+          student.cfRating = this.generateRandomRating(400,3000);
+          student.cfSumContest = this.generateRandomRating(1,50);
+          student.ratingHistory = this.generateRatingHistory(student.cfRating);
+    });
+
+        this.filteredCompetitions = this.competitions;
+        this.applyFilters(); // 马上应用过滤器以更新分页和显示
+      })
+    },
+
+
   },
 
   mounted() {
-    this.filteredCompetitions = this.competitions; // 默认显示所有数据
+    this.getInfo();
+    this.filteredCompetitions = this.competitions; 
   },
 };
 </script>
 
 
 <style scoped>
+.page{
+  border:2px solid rgb(96, 94, 94);
+  width:84%;
+  box-shadow: 0px -1px 8px rgba(72, 67, 67, 1);
+  border-radius: 0.3%;
+}
+
 .topBar{
-    font-weight: 800;
+  padding-bottom: 5px;
+  padding-left: 550px;  
+  color:#4d4e4f;
+
+}
+
+.buttons{
+  margin-left: 150px;
+}
+
+.el-button{
+  border:2px solid rgb(144, 144, 144);
+  border-bottom:0;
 }
 
 .el-table {
   max-width: 100%;
   overflow: auto;
   margin-bottom: 10px;
+  border:2px solid gray;
+  margin-left: 150px;
 }
 
 .example-pagination-block + .example-pagination-block {
   margin-top: 10px;
+  
 }
 
 .example-pagination-block .example-demonstration {
   margin-bottom: 16px;
+  
+}
+
+.block{
+  margin-left: 150px;
+
 }
 
 .searchBar {
   margin-top: 10px;
   width: 200px;
+  margin-left: 150px;
 }
 
 .row-selected {

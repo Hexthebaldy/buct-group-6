@@ -1,28 +1,40 @@
 <!-- src/views/About.vue -->
 <template>
   <div class="container">
-    <h3>CFproblems</h3>
-    <el-table :data="pagedProblemInfo" style="width: 65%">
-      <el-table-column prop="cid" label="cid" width="150"></el-table-column>
+    <div class="page">
+      <h3>Codeforces Problems</h3>
+    <el-table :data="pagedProblemInfo" style="width: 88%">
       <el-table-column
-        prop="contestName"
-        label="ContestName"
+        prop="cfContestId"
+        label="cfContestId"
         width="150"
       ></el-table-column>
-      <el-table-column prop="index" label="Index" width="100"></el-table-column>
-      <el-table-column prop="name" label="Name" width="150"></el-table-column>
-      <el-table-column prop="tags" label="Tags" width="150"> </el-table-column>
       <el-table-column
-        prop="diffculty"
-        label="Diffculty"
-        width="150"
-      ></el-table-column>
-      <el-table-column prop="view" label="View" width="150"></el-table-column>
+        prop="cfContestName"
+        label="cfContestName" 
+        width="350">
+      </el-table-column>
+      <el-table-column prop="cfIndex" label="cfIndex" width="100"></el-table-column>
+      <el-table-column 
+        prop="cfProblemName" 
+        label="cfProblemName" 
+        width="200">
+      </el-table-column>
       <el-table-column
-        prop="submit"
-        label="Submit"
-        width="150"
+        prop="cfTags"
+        label="cfTags"
+        width="200"
       ></el-table-column>
+      <el-table-column label="Actions" width="150">
+        <template v-slot="scope">
+          <el-button 
+            @click="viewProblem(scope.row.cfContestId,scope.row.cfIndex)" 
+            type="primary" 
+            size="small"
+          >View</el-button>
+        </template>
+      </el-table-column>
+      
     </el-table>
 
     <div class="block">
@@ -42,11 +54,14 @@
         placeholder="Search by problem name"
       ></el-input>
     </div>
+    </div>
   </div>
 </template>
   
   <script>
 import { ElTable,ElTableColumn,ElInput, ElPagination } from "element-plus";
+import axios from 'axios';
+
 
 export default {
   name: "ojAbout",
@@ -59,211 +74,12 @@ export default {
   data() {
     return {
       problemInfo: [
-        {
-          cid: "00001",
-          contestName: "CodeCraft-22",
-          index: "A",
-          name: "Beat the odds",
-          tags: "greedy",
-          diffculty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00002",
-          contestName: "CodeCraft-22",
-          index: "B",
-          name: "Shoe Shuffing",
-          tags: "implementation",
-          diffculty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00003",
-          contestName: "CodeCraft-22",
-          index: "C",
-          name: "Sum of substring",
-          tags: "consructive",
-          diffculty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00004",
-          contestName: "CodeCraft-22",
-          index: "D",
-          name: "Max GEQ Sum",
-          tags: "binary search",
-          diffculty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00005",
-          contestName: "CodeCraft-22",
-          index: "E",
-          name: "Number of Groups",
-          tags: "bubble sort",
-          diffculty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00006",
-          contestName: "CodeCraft-23",
-          index: "A",
-          name: "Not Like Us",
-          tags: "greedy",
-          diffculty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00007",
-          contestName: "CodeCraft-23",
-          index: "B",
-          name: "Crodie",
-          tags: "graphs",
-          diffculty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00008",
-          contestName: "CodeCraft-23",
-          index: "C",
-          name: "Tooth Fairy",
-          tags: "trees",
-          diffculty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00009",
-          contestName: "CodeCraft-23",
-          index: "D",
-          name: "Dragon Slayer",
-          tags: "graphs",
-          difficulty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00010",
-          contestName: "CodeCraft-23",
-          index: "E",
-          name: "Treasure Hunter",
-          tags: "dynamic programming",
-          difficulty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00011",
-          contestName: "CodeCraft-23",
-          index: "F",
-          name: "Maze Runner",
-          tags: "graphs",
-          difficulty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00012",
-          contestName: "CodeCraft-23",
-          index: "G",
-          name: "Puzzle Master",
-          tags: "backtracking",
-          difficulty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00013",
-          contestName: "CodeCraft-23",
-          index: "H",
-          name: "Space Explorer",
-          tags: "geometry",
-          difficulty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00014",
-          contestName: "CodeCraft-23",
-          index: "I",
-          name: "Number Cruncher",
-          tags: "math",
-          difficulty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00015",
-          contestName: "CodeCraft-23",
-          index: "J",
-          name: "Algorithm Alchemist",
-          tags: "greedy",
-          difficulty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00016",
-          contestName: "CodeCraft-23",
-          index: "K",
-          name: "Bitwise Wizard",
-          tags: "bit manipulation",
-          difficulty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00017",
-          contestName: "CodeCraft-23",
-          index: "L",
-          name: "Pathfinder",
-          tags: "shortest paths",
-          difficulty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00018",
-          contestName: "CodeCraft-23",
-          index: "M",
-          name: "Data Diver",
-          tags: "data structures",
-          difficulty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00019",
-          contestName: "CodeCraft-23",
-          index: "N",
-          name: "Sequence Solver",
-          tags: "strings",
-          difficulty: -1,
-          view: "view",
-          submit: "submit",
-        },
-        {
-          cid: "00020",
-          contestName: "CodeCraft-23",
-          index: "O",
-          name: "Prime Detective",
-          tags: "number theory",
-          difficulty: -1,
-          view: "view",
-          submit: "submit",
-        },
+        
       ],
 
       searchQuery: "",
       filterdProblemInfo: [],
-      pageSize: 5,
+      pageSize: 10,
       currentPage: 1,
     };
   },
@@ -295,9 +111,31 @@ export default {
     handlePageChange(page) {
       this.currentPage = page;
     },
+    getInfo(){
+      const sheet = axios({
+        method:'get',
+        url:'/stu/acmer/cfproblem/all/1/200',
+      }).then(res =>{
+        this.problemInfo = res.data.data.records;
+        console.log('info got: ',this.problemInfo);
+
+        this.filterdProblemInfo = this.problemInfo;
+        this.applyFilters();
+
+      })
+
+    },
+    viewProblem(contestId,index){
+      const url = `https://codeforces.com/contest/${contestId}/problem/${index}`;
+      window.open(url,'_blank')
+    }
+
+
+
   },
 
   mounted() {
+    this.getInfo();
     this.filterdProblemInfo = this.problemInfo;
   },
 };
@@ -305,24 +143,47 @@ export default {
   
 <style lang="css" scoped>
 .container {
-  width: 100vw;
-  height: 95vh;
-  background: rgb(180, 186, 186);
-  background: linear-gradient(
-    34deg,
-    rgba(180, 186, 186, 1) 19%,
-    rgba(208, 211, 235, 1) 52%,
-    rgba(186, 185, 185, 1) 86%
-  );
+  
+  background: rgb(241, 243, 244);
+
+}
+
+.page{
+  margin-top: 20px;
+  margin-left: 70px;
+  border:2px solid rgb(96, 94, 94);
+  width:95%;
+  height:1180px;
+  box-shadow: 0px -1px 8px rgba(72, 67, 67, 1);
+  border-radius: 0.3%;
+}
+
+h3{
+  margin-left: 550px;
+  color:#4d4e4f;
+
+}
+
+.el-table{
+  max-width: 100%;
+  overflow: auto;
+  margin-bottom: 10px;
+  border:2px solid gray;
+  margin-left: 80px;
+  
 }
 
 .searchBar {
   margin-top: 10px;
   width: 20%;
+  margin-left: 80px;
+
 }
 
 .block{
   margin: 10px;
+  margin-left: 80px;
+
 }
 
 

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axios CDN Example</title>
+  <!-- 引入 axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <h1>Axios CDN Example</h1>
+  <button>Get info from server</button>
+  <script>
+    const btns = document.querySelectorAll("button");
+
+
+    const testAPI = axios.create({
+      baseURL:'http://localhost:3000',
+    })
+
+    testAPI.get('/posts').then(response =>{
+      console.log(response.data)
+    })
+
+
+    const acmer = axios.create({
+      baseURL:'http://47.95.219.31:8089/doc.html#',
+      timeout:2000,
+    });
+
+    acmer.get('/acmer/codeforces/all/{1}/{5}').then(response =>{
+      console.log(response.data);
+    });
+
+
+
+
+  </script>
+</body>
+</html>

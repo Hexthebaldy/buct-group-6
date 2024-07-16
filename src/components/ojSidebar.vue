@@ -8,7 +8,6 @@
       <router-link class="sideBarSelection" to="/contestArrangement">Schedule</router-link>
       <router-link class="sideBarSelection" to="/rank">Rank</router-link>
       <router-link class="sideBarSelection" to="/train">Train</router-link>
-      <router-link class="sideBarSelection" to="/award">Awards</router-link>
       <router-link class="sideBarSelection" to="/dataVisualization">DataVisualization</router-link>
     </div>
 </template>
@@ -21,10 +20,11 @@
   
   <style>
   .sidebar {
-    width: 200px;
+    width: 180px;
     height: 100vh;
-    background: rgb(163,176,175);
-    background: linear-gradient(34deg, rgba(163,176,175,1) 19%, rgba(55,59,91,1) 52%, rgba(111,109,109,1) 86%, rgba(112,112,112,1) 92%);
+    box-shadow: 5px 0px 8px rgba(72, 67, 67, 1);
+    background: rgb(48,54,54);
+    background: linear-gradient(243deg, rgba(48,54,54,1) 32%, rgba(36,38,37,1) 52%, rgba(29,27,27,1) 86%);
     color: #fff;
     padding-top: 150px;
     padding-left: 20px;
