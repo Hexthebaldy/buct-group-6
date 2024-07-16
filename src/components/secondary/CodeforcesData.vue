@@ -85,7 +85,7 @@ import {
 } from "element-plus";
 import * as echarts from "echarts";
 import axios from 'axios';
-
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -129,6 +129,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(['updatePlayersInfo']),
     filterCompetitions(type) {
       if (type === "all") {
         this.filteredCompetitions = this.competitions;
@@ -229,15 +230,19 @@ export default {
 
         this.filteredCompetitions = this.competitions;
         this.applyFilters(); // 马上应用过滤器以更新分页和显示
+        this.sendArray(); //数据存到vuex
+
       })
     },
-
+    sendArray(){
+      this.updatePlayersInfo(this.competitions);
+    },
 
   },
 
   mounted() {
     this.getInfo();
-    this.filteredCompetitions = this.competitions; 
+    this.filteredCompetitions = this.competitions;
   },
 };
 </script>
@@ -247,7 +252,7 @@ export default {
 .page{
   border:2px solid rgb(96, 94, 94);
   width:84%;
-  box-shadow: 0px -1px 8px rgba(72, 67, 67, 1);
+  box-shadow: 0px -1px 8px rgb(67, 67, 72);
   border-radius: 0.3%;
 }
 

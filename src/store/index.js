@@ -3,7 +3,10 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: {
-    isLoggedIn: false,
+    isLoggedIn: false,//管理登陆状态
+
+    playersInfo:[],//主页选手数据
+
   },
 
 
@@ -12,7 +15,9 @@ export default createStore({
       state.isLoggedIn = status;
     },
 
-
+    setPlayersInfo(state,payload){
+      state.playersInfo = payload;
+    },
 
   },
 
@@ -23,8 +28,15 @@ export default createStore({
         commit('setLoggedIn',true)
     },
     
+    updatePlayersInfo({commit},newArray){
+      commit('setPlayersInfo',newArray);
+    },
+
+  },
 
 
+  getters:{
+    getArray:(state) => state.playersInfo, 
   },
   
 
