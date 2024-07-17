@@ -405,7 +405,6 @@ export default {
 #ratingHistory {
   width: 800px;
   height: 400px;
-  padding-bottom: 100px;
   margin-left: 200px;
 }
 
