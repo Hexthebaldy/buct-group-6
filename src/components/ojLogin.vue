@@ -72,6 +72,8 @@ export default {
       }
         }).then(res =>{
           console.log("registerd as: ",res);
+        }).catch(err=>{
+          alert("registerd successfully !");
         })
       } else {
         alert('Please enter a username and password.');

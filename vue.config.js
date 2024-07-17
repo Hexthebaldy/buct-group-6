@@ -8,7 +8,8 @@ module.exports = {
   lintOnSave: false,
   devServer: {
     open: true,
-    host: '47.95.219.31',
+    // host: '47.95.219.31',
+    host:"localhost",
     port: 8087,
     https: false,
     // 以上的ip和端口是我们本机的;下面为需要跨域的
