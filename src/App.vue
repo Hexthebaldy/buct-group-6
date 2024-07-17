@@ -12,7 +12,7 @@
 </template> -->
 <template>
   <div id="app">
-    <div class="login-container" v-if="!isLoggedIn">
+    <div class="login-container" v-if="0">
       <ojLogin @login-success="handleLoginSuccess"></ojLogin>
     </div>
     <div v-else class="container">

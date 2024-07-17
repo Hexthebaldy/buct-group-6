@@ -142,6 +142,7 @@ export default {
     },
   },
 
+  
 
   watch: {
     searchQuery: {

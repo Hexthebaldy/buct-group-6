@@ -17,6 +17,16 @@
         prop="cfContestName"
         label="cfContestName" 
         width="250">
+
+        <template v-slot="scope">
+          <a
+            :href="`https://codeforces.com/contest/${scope.row.cfContestId}`"
+            target="_blank"
+          >
+            {{ scope.row.cfContestName }}
+          </a>
+        </template>
+
       </el-table-column>
 
       <el-table-column
@@ -148,7 +158,7 @@ export default {
     applyFilters() {
       if (this.searchQuery) {
         this.filterdContests = this.contests.filter((c) =>
-          c.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+          c.cfContestName.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       } else {
         this.filterdContests = this.contests;

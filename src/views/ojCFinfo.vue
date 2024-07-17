@@ -102,7 +102,7 @@ export default {
     applyFilters() {
       if (this.searchQuery) {
         this.filterdProblemInfo = this.problemInfo.filter((c) =>
-          c.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+          c.cfContestName.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       } else {
         this.filterdProblemInfo = this.problemInfo;

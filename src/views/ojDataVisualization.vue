@@ -42,6 +42,27 @@ export default {
         { value: 0, name: "30-50" },
         { value: 0, name: "50+" },
       ],
+      submissionInfo:[
+
+      ],
+      languageInfo:[
+        {value:0, name:"GNU C++11"},
+        {value:0, name:"C++17 (GCC 7-32)"},
+        {value:0, name:"C++14 (GCC 6-32)"},
+        {value:0, name:"Java 8"},
+        {value:0, name:"Python 3"},
+        {value:0, name:"C11"},
+        
+      ],
+      dateInfo:[
+        {value:0,name:1},
+        {value:0,name:2},
+        {value:0,name:3},
+        {value:0,name:4},
+        {value:0,name:5},
+        {value:0,name:6},
+
+      ]
     };
   },
 
@@ -221,7 +242,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July']
+          data: ['Jan', 'Feb', 'March', 'April', 'May', 'June']
         },
         yAxis: {
           type: 'value'
@@ -229,20 +250,16 @@ export default {
         series: [
           {
             data: [
-              120,
-              {
-                value: 200,
-                itemStyle: {
-                  color: '#a90000'
-                }
-              },
-              150,
-              80,
-              70,
-              110,
-              130
+              220,
+              192,
+              589,
+              287,
+              349,
+              113
             ],
-            type: 'bar'
+            type: 'bar',
+            color:'#00008b',
+
           }
         ]
       };
@@ -272,7 +289,7 @@ export default {
         grid: {
           left: '3%',
           right: '4%',
-          bottom: '3%',
+          bottom: '10%',
           containLabel: true
         },
         xAxis: {
@@ -281,36 +298,93 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: ['c#', 'python', 'JavaScript', 'Java', 'C++']
+          data: [ 'C 11','C++14','Java 8','Python 3','C++11','C++17']
         },
         series: [
           {
             name: 'Codeforces',
             type: 'bar',
-            data: [18203, 23489, 29034, 104970, 131744]
-          },
-          {
-            name: 'World',
-            type: 'bar',
-            data: [19325, 23438, 31000, 121594, 134141]
+            color:'#4c8dce',
+            data: [10,13,19,44,158,256]
           }
         ]
       };
 
       option && myChart.setOption(option);
 
-    }
+    },
+    getLanguage(){
+      const Language = axios({
+        method: "get",
+        url: "/stu/acmer/cfsubmission/all/1/500",
+      }).then((res) => {
+        this.submissionInfo = res.data.data.records;
+        console.log("Submission info got!");
+        this.submissionInfo.forEach((submit) => {
+          // submit.cfSubmissionLanguage
+          if(submit.cfSubmissionLanguage == "GNU C++11"){
+            this.languageInfo[0].value += 1;
+          }else if(submit.cfSubmissionLanguage == "C++17 (GCC 7-32)"){
+            this.languageInfo[1].value += 1;
+          }else if(submit.cfSubmissionLanguage == "C++14 (GCC 6-32)"){
+            this.languageInfo[2].value += 1;
+          }else if(submit.cfSubmissionLanguage == "Java 8"){
+            this.languageInfo[3].value += 1;
+          }else if(submit.cfSubmissionLanguage == "Python 3"){
+            this.languageInfo[4].value += 1;
+          }else{
+            const len = (submit.cfSubmissionLanguage.length)%6
+            this.languageInfo[len].value += 1;
+          };
+        });
+
+        console.log("LanguageInfo: ",this.languageInfo);
+
+      });
+    },
+    getDate(){
+      const Language = axios({
+        method: "get",
+        url: "/stu/acmer/cfsubmission/all/17/1750",
+      }).then((res) => {
+        this.submissionInfo = res.data.data.records;
+        console.log("Submission info got!");
+        this.submissionInfo.forEach((submit) => {
+          const date = 0+submit.cfSubmissionDate;
+          if(date > 1704067200 & date<1706745600){
+            this.dateInfo[0].value += 1;
+          }else if(date > 1706745600 & date < 1709164800){
+            this.dateInfo[1].value += 1;
+          }else if(date > 1709164800 & date < 1711843200){
+            this.dateInfo[2].value += 1;
+          }else if(date > 1711843200 & date < 1714435200 ){
+            this.dateInfo[3].value += 1;
+          }else if(date > 1714435200 & date < 1717113600  ){
+            this.dateInfo[4].value += 1;
+          }else{
+            this.dateInfo[5].value += 1;
+          };
+        });
+
+        console.log("DateInfo: ",this.dateInfo);
+
+      });
+    },
 
 
+    createAll(){
+      this.getLanguage();
+      this.getDate();
+      this.createPie1();
+      this.createPie2();
+      this.createColumn1();
+      this.createColumn2();
+    },
     
   },
 
   mounted() {
-    this.createPie1();
-    this.createPie2();
-    this.createColumn1();
-    this.createColumn2();
-
+    this.createAll();
   },
 };
 </script>  

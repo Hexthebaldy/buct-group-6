@@ -7,7 +7,7 @@
       <router-link class="sideBarSelection" to="/contestFeedback">ContestFeedback</router-link>
       <router-link class="sideBarSelection" to="/contestArrangement">Schedule</router-link>
       <router-link class="sideBarSelection" to="/rank">Rank</router-link>
-      <router-link class="sideBarSelection" to="/train">Train</router-link>
+      <!-- <router-link class="sideBarSelection" to="/train">Train</router-link> -->
       <router-link class="sideBarSelection" to="/dataVisualization">DataVisualization</router-link>
     </div>
 </template>
@@ -33,10 +33,11 @@
   }
   
   .sidebar a {
+    font-size: 17px;
     display: block;
     color: #fff;
     text-decoration: none;
-    margin: 30px 0;
+    margin: 50px 0;
   }
   
   .sidebar a.router-link-exact-active {
