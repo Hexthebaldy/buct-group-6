@@ -337,7 +337,7 @@ export default {
       <el-table-column
         prop="stuName"
         label="Student Name"
-        width="150">
+        width="700">
         <template v-slot="scope">
           <a
             href="javascript:void(0)"
@@ -346,11 +346,6 @@ export default {
             {{ scope.row.stuName }}
           </a>
         </template>
-      </el-table-column>
-      <el-table-column
-        prop="cfUserId"
-        label="User ID"
-        width="550">
       </el-table-column>
       <el-table-column
         prop="cfRank"
@@ -393,13 +388,9 @@ export default {
       <el-table-column
         prop="cfContestName"
         label="Contest Name"
-        width="250">
+        width="800">
       </el-table-column>
-      <el-table-column
-        prop="cfContestId"
-        label="Contest ID"
-        width="550">
-      </el-table-column>
+      
       <el-table-column
         prop="cfRank"
         label="Rank"
